@@ -24,7 +24,9 @@ function recalcVars(){
 	scrollFromBottom = (parseInt(scrollFromTop)+parseInt(viewPortHeight));
 	for (var i = 0; i < elementsToTrack.length; i++) {
 		if ($(elementsToTrack[i]).exists()) {
-			checkInViewport(scrollFromBottom, elementsToTrack[i]);
+			$(elementsToTrack[i]).each(function () {
+	            checkInViewport(scrollFromBottom, this);
+	        })
 		}
    	}
 }
@@ -41,7 +43,9 @@ function checkInViewport(scrollBottom, domElement){
 	var elementPos = $(domElement).offset().top;
 	if((parseInt(scrollBottom)+parseInt(pixelOffset)) > elementPos){
 		$(domElement).addClass(inClassName).removeClass(outClassName);
+		$(domElement).trigger(inClassName);
 	} else {
 		$(domElement).removeClass(inClassName).addClass(outClassName);
+		$(domElement).trigger(outClassName);
 	}
 }
